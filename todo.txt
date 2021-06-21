@@ -1,0 +1,41 @@
+Must: 
+1. resultInventory to be populated for quarter -1 for each team when creating game. for +-50% of prev quarter.permissible X and Y for -1 should be 0 so that in quarter 0 all fresh will got to market and no spot buying.
+
+'' if last qtr is not there than permissible shall be blank and treated as zero therefore all fresh purshase go to market or Vendor .. but if it has permis x of last quarter than limit market/vendor purchase up to +-50 and buy remaining from spot. this +-50 will go to this qtr permissible.
+>> permissible X means fresh purchases only from market/vendor in current quarter.
+freshPurX means fresh purchases required from Market/Vendor and Spot
+
+==>>  previous quarter permissible X and Y
+Effect: Rawmaterial Purchase cost for current Quarter can not be calculated.
+
+2. adding or manipulating columns of  dtRawMaterialCost may affect wrong results in all types of inventory. So be cautius.
+
+3. by default teams supplier is vendorID 0 from vendorMarket of businesstype. after empannelment supplier changes. Whenever adding new business also add vendorid 0 data.(Add new business module to be created for vendorMarket and productmaster)
+
+Also if vendorId in vendorMaster is supplying any particular product then replicate other product cost from vendorID 0 ie market rates. (Logic to e developed during vendor creation- Whenever market rate of 0 changes in subsequent quarter.. also update same rates in nonzero vendor id.)
+
+
+Rules:
+1. cash collection due shall be recievable in next quarter.
+
+2. Tender qty awarded to be supplied in current quarter will only be displayed and cash collection will be done for these quantities in current quarter.
+
+## Tenders###
+3. By default System will try to supply Tender qty from inventory. If not able to meet then outsource it to resultMarket.
+If team has given production priority in resultTenders then reduce it from total production to get available stock for sales.
+set 1 fro production priority and 0 for not so that multipliucation will give a zero. Reduction in total production will result
+in market share allocation.subtract the priority quantities of tender for each products. If production is less than tender to be supplied then market allocation for that product shall be zero.
+4. raw Material and spot raw material purchase will be done from resultMarket.
+
+5. Once subscribe, Subscription charges shall be levied each quarter till unsubscribe.
+
+6. If i have empanneled vendor than spot rate will not be applied for Raw as well as Products.
+ConsumX is consumption of Raw material for production, OpeningX is closing inventory from last quarter, decisionX is
+decision sheet value of raw material, lastwtdavgConX is last wtd avg price of total consumption(For qtr 0 it may be actual market rate as qtr -1 be blank).
+CostX and spotCostX is either open market cost or empanneled VendorCost, lastpermissibleX is permissibleX ie fresh purchases made on market/vendor (and not spot) in last qtr.
+lastQtrPercent is to be applied on lastpermissibleX  to get permissibleX of this quarter to purchase from market/vendor (and not spot). spotX is to be purchased on spot rates thus 
+freshPurX is sum of  permissibleX  and spotX. Xvalue is cost of permissibleX and spotXvalue is cost of spotX.
+freshXvalue is sum of Xvalue and spotXvalue . wtdAvgPurX is freshXvalue / freshPurX . 
+while wtdAvgConX is (openingXvalue+freshXvalue)/(OpeningQty+FreshQty) and this will go to get unit cost of product. 
+
+  
